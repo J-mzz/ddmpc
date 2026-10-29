@@ -1,29 +1,30 @@
-function [A,B,xi] = getCons(X,Cons) 
-% 
-% Output: 
-%   A,B in (11)
+function [A,B,xi] = getCons(X,Cons)
+% GETCONS  Data matrices of the consistency set.
+%   [A, B, xi] = getCons(X, Cons) returns A, B and xi such that every system
+%   x_{k+1} = f(x_k) + g(x_k)*u_k compatible with the data satisfies
+%   |A*vec(f) + B*vec(g) - xi| <= eps, where f and g are expanded in
+%   monomials of degree <= Cons.df and <= Cons.dg (f(0) = 0).
 %
-% Input:
-%   X: data matrix, columns represent [u,t,x1,x2,dx1,dx2]
-%   df: degree of function f(x)
-%   dg: degree of function g(x)
-%   n: # of states
-%   T: # of samples
+%   X     data matrix, one sample per row: [u, t, x1, x2, x1+, x2+, ...]
+%   Cons  problem dimensions (n, df, dg); all rows of X are used
+%
+%   Note: the rows of X are shuffled with randperm (uses the global random
+%   stream).
 
-kkk = 1;
+dmin = 1;   % lowest monomial degree in f (f(0) = 0)
 
 df = Cons.df;
 dg = Cons.dg;
 n = Cons.n;
 T = size(X,1);
 
-lf = nchoosek(df+n, n) -kkk;         % length of monomial vector for f(x)
+lf = nchoosek(df+n, n) -dmin;         % length of monomial vector for f(x)
 lg = nchoosek(dg+n, n);         % ... for g(x)
 
 syms x1 x2
 vars = [x1,x2];
 
-p = monomials(vars, kkk:df);      % phi
+p = monomials(vars, dmin:df);      % phi
 g = monomials(vars, 0:dg);      % gamma
 
 p_fun = matlabFunction(p);

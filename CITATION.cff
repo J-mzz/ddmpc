@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper below."
+title: "ddmpc: code for Robust data-driven receding horizon control"
+type: software
+authors:
+  - family-names: Zheng
+    given-names: Jian
+repository-code: "https://github.com/J-mzz/ddmpc"
+license: MIT
+preferred-citation:
+  type: article
+  title: "Robust data-driven receding horizon control"
+  authors:
+    - family-names: Zheng
+      given-names: Jian
+    - family-names: Kiani
+      given-names: Sahand
+    - family-names: Sznaier
+      given-names: Mario
+    - family-names: Lagoa
+      given-names: Constantino
+  journal: "IFAC-PapersOnLine"
+  volume: 59
+  issue: 16
+  start: 25
+  end: 30
+  year: 2025
+  publisher:
+    name: Elsevier
+  doi: "10.1016/j.ifacol.2025.10.074"
