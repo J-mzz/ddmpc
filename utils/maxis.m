@@ -1,13 +1,25 @@
 function [Fout, gout] = maxis(V_AB, F, g, u, eps)
-% Franco's algorithm
-% V_AB contains vertices of Ai Bi
+% MAXIS  One iteration of the largest robust invariant set computation
+%   (Franco's algorithm, Algorithm 2 in the paper).
+%   [Fout, gout] = maxis(V_AB, F, g, u, eps) returns a polytope
+%   {x : Fout*x <= gout} of states that every system in the consistency
+%   set can steer into {x : F*x <= g} with an input in [-u, u], robustly
+%   to ||w||_inf <= eps (see below).
+%
+%   V_AB  vertices of the consistency set, one row [A(1,:), A(2,:), B']
+%         per vertex
+%   For each extreme input -u and u, the preimages of the set under all
+%   vertices (A_i, B_i) are intersected; the result is the convex hull of
+%   both intersections.
+
+% tighten the set by the worst-case noise
 d_vert = eps*[1 1 -1 -1; 1 -1 1 -1];
 maxFd = max(F*d_vert, [], 2);
 g = g - maxFd;
 
-%% 
+%% input u_k = -u
 
-feas_u = -u;   % 
+feas_u = -u;
 
 for ii = 1:size(V_AB,1)
     V_xkold = [];
@@ -42,9 +54,9 @@ for ii = 1:size(V_AB,1)
 end
 V1 = V;
 
-%%
+%% input u_k = u
 
-feas_u = u;   % 
+feas_u = u;
 
 for ii = 1:size(V_AB,1)
     V_xkold = [];

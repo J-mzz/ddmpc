@@ -1,7 +1,8 @@
 function x = getDataRND(eg,eps,N)
-% Randomly sample N points on the plane, generate xdot with input and noise
-% System dynamics: x_dot = f(x) + g(x)u(x) + noise
-% u \in [-1,1]
+% GETDATARND  N noisy samples of the true system at random states.
+%   x = getDataRND(eg, eps, N) samples x in [-2, 2]^2 and u in [-1, 1] and
+%   returns one row [u, i, x1, x2, x1+, x2+, w1, w2] per sample, where
+%   x+ = f(x) + g*u + w and ||w||_inf <= eps (see getSystem.m).
 
 box = 2;
 
